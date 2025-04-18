@@ -1,14 +1,14 @@
 from django import forms
-from .models import Advertisement
+from .models import Ad
 
-class AdvertisementForm(forms.ModelForm):
+class AdForm(forms.ModelForm):
     class Meta:
-        model = Advertisement
-        fields = ['title', 'content', 'price', 'category', 'image']
+        model = Ad
+        fields = ['title', 'description', 'price', 'category', 'image']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
-            'category': forms.Select(attrs={'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-select'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
         }

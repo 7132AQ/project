@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<section class="hero-section bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1 class="display-4 fw-bold mb-4">Добро пожаловать на доску объявлений</h1>
+                <p class="lead mb-4">Находите лучшие предложения или размещайте свои объявления бесплатно!</p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'ads:ad_list' %}" class="btn btn-primary btn-lg">Смотреть объявления</a>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'ads:ad_create' %}" class="btn btn-outline-primary btn-lg">Разместить объявление</a>
+                    {% else %}
+                    <a href="{% url 'users:register' %}" class="btn btn-outline-primary btn-lg">Зарегистрироваться</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img src="https://i.pinimg.com/736x/23/13/1d/23131d9b855eaf251650b778175b0714.jpg" alt="Доска объявлений" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Популярные категории</h2>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-car-front fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Транспорт</h5>
+                        <p class="card-text">Автомобили, мотоциклы, велосипеды и запчасти</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-house fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Недвижимость</h5>
+                        <p class="card-text">Квартиры, дома, участки, коммерческая недвижимость</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-briefcase fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Работа</h5>
+                        <p class="card-text">Вакансии и резюме в различных сферах</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-phone fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Электроника</h5>
+                        <p class="card-text">Телефоны, компьютеры, планшеты и аксессуары</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Как это работает?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="bi bi-person-plus fs-3"></i>
+                    </div>
+                    <h4 class="mt-3">1. Регистрация</h4>
+                    <p>Создайте аккаунт, чтобы размещать объявления</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="bi bi-plus-square fs-3"></i>
+                    </div>
+                    <h4 class="mt-3">2. Размещение</h4>
+                    <p>Добавьте объявление с фото и описанием</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="bi bi-chat-dots fs-3"></i>
+                    </div>
+                    <h4 class="mt-3">3. Общение</h4>
+                    <p>Отвечайте на вопросы потенциальных покупателей</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

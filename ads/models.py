@@ -1,22 +1,32 @@
 from django.db import models
-from django.conf import settings  # Вот здесь магия
+from django.contrib.auth import get_user_model
+from django.urls import reverse
+from django.utils import timezone
 
-class Advertisement(models.Model):
-    CATEGORIES = [
-        ('goods', 'Товары'),
-        ('services', 'Услуги'),
-        ('property', 'Недвижимость'),
-        ('transport', 'Транспорт'),
+User = get_user_model()
+
+class Ad(models.Model):
+    CATEGORY_CHOICES = [
+        ('Транспорт', 'Транспорт'),
+        ('Недвижимость', 'Недвижимость'),
+        ('Работа', 'Работа'),
+        ('Услуги', 'Услуги'),
+        ('Личные вещи', 'Личные вещи'),
+        ('Для дома и дачи', 'Для дома и дачи'),
+        ('Электроника', 'Электроника'),
+        ('Хобби и отдых', 'Хобби и отдых'),
     ]
     
     title = models.CharField(max_length=200)
-    content = models.TextField()
+    description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    category = models.CharField(max_length=20, choices=CATEGORIES)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='ads')
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
     image = models.ImageField(upload_to='ads/', null=True, blank=True)
-
+    created_at = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+        return reverse('ads:ad_detail', kwargs={'pk': self.pk})

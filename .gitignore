@@ -2,5 +2,5 @@ db.sqlite3
 *.pyc
 venv
 env
-media
+# media
 __pycache__

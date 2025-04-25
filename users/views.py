@@ -16,7 +16,10 @@
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
+from .forms import UserUpdateForm
+from django.contrib import messages
 
 def register_view(request):
     if request.method == 'POST':
@@ -41,9 +44,22 @@ def login_view(request):
             return render(request, 'users/login.html', {'error': 'Неверные данные'})
     return render(request, 'users/login.html')
 
-def logout_view(request):
+@login_required
+def user_logout(request):
     logout(request)
-    return redirect('login')
+    return redirect('ads:home')
 
 def home(request):
     return render(request, 'users/home.html')
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Ваш профиль был обновлен!')
+            return redirect('users:profile')
+    else:
+        form = UserUpdateForm(instance=request.user)
+    return render(request, 'users/profile.html', {'form': form})

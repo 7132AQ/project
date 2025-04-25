@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои объявления{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Мои объявления</h1>
+
+{% if ads %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for ad in ads %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            {% if ad.image %}
+            <img src="{{ ad.image.url }}" class="card-img-top" alt="{{ ad.title }}" style="height: 200px; object-fit: cover;">
+            {% else %}
+            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                <i class="bi bi-image text-muted fs-1"></i>
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <span class="badge bg-primary mb-2">{{ ad.category }}</span>
+                <h5 class="card-title">{{ ad.title }}</h5>
+                <p class="card-text text-truncate">{{ ad.description }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 text-primary">{{ ad.price }} ₸</h5>
+                    <small class="text-muted">{{ ad.created_at|date:"d.m.Y" }}</small>
+                </div>
+            </div>
+            <div class="card-footer bg-transparent">
+                <div class="d-grid gap-2">
+                    <a href="{{ ad.get_absolute_url }}" class="btn btn-outline-primary">Просмотреть</a>
+                    <a href="{% url 'ads:ad_delete' ad.pk %}" class="btn btn-outline-danger">Удалить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">
+    У вас пока нет объявлений. <a href="{% url 'ads:ad_create' %}" class="alert-link">Создайте первое!</a>
+</div>
+{% endif %}
+{% endblock %}

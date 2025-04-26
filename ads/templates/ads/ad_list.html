@@ -44,6 +44,41 @@
     {% endfor %}
 </div>
 
+<form method="get" class="mb-4">
+
+    <input type="text" name="q" value="{{ request.GET.q }}"
+           placeholder="Поиск..." class="form-control mb-2">
+
+    <select name="category" class="form-select mb-2">
+        <option value="">Все категории</option>
+        {% for value, label in categories %}
+        <option value="{{ value }}"
+            {% if request.GET.category == value %}selected{% endif %}>
+            {{ label }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <div class="row mb-2">
+        <div class="col">
+            <input type="number" name="min_price"
+                   value="{{ request.GET.min_price }}"
+                   placeholder="От" class="form-control" min="0">
+        </div>
+        <div class="col">
+            <input type="number" name="max_price"
+                   value="{{ request.GET.max_price }}"
+                   placeholder="До" class="form-control" min="0">
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Применить</button>
+    <a href="?" class="btn btn-secondary">Сбросить</a>
+</form>
+
+
+
+
 {% if is_paginated %}
 <nav class="mt-4">
     <ul class="pagination justify-content-center">
@@ -52,7 +87,7 @@
             <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a>
         </li>
         {% endif %}
-        
+
         {% for num in page_obj.paginator.page_range %}
         {% if page_obj.number == num %}
         <li class="page-item active">
@@ -64,7 +99,7 @@
         </li>
         {% endif %}
         {% endfor %}
-        
+
         {% if page_obj.has_next %}
         <li class="page-item">
             <a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперед</a>
